@@ -1,0 +1,38 @@
+{% extends "shop/base.html" %}
+{% block title %}
+My orders
+{% endblock %}
+{% block content %}
+<h1> {{ order.product }}</h1>
+<ul class="object-tools">
+ <li>
+ <a href="#" onclick="window.print();">Print order</a>
+ </li>
+</ul>
+<table>
+ <tr>
+ <th>Created</th>
+ <td>{{ order.created }}</td>
+ </tr>
+ <tr>
+ <th>Customer</th>
+ <td>{{ order.first_name }} {{ order.last_name }}</td>
+ </tr>
+ <tr>
+<tr><th>Address</th>
+    <td>{{ order.delivery_point }}, {{ order.area }}</td>
+    </tr>
+    <tr>
+    <th>Total amount</th>
+    <td>Ksh {{ order.cost }}</td>
+    </tr>
+    <tr>
+    <th>Status</th>
+    <td>{% if order.paid %}Paid{% else %}Pending payment{% endif %}
+        </td>
+    </tr>
+   </table>
+   <div>
+       <img src="{{order.product.image_1.url}}" alt="{{order.product}}" style="width: 80%">
+   </div>
+   {% endblock %}

@@ -1,0 +1,58 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}
+{% if blog %}{{ topic.name }}{% else %}Topic{% endif %}
+{% endblock %}
+{% block content %}
+<div class="product-detail container">
+    <span style="font-weight: 500;">{{ topic.name|title }} </span> <br>
+    Proposed by: <span style="color: grey;">{{topic.proposer}}</span>
+<div class="container">
+    {{ topic.description|linebreaks }}
+</div>
+<div>
+    <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{topic.likes}} Likes 
+    <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike This Post</a> {{topic.dislikes}} dislikes
+    <form id="likebutton" method="POST" action="/blog/vote/{{topic.id}}/preference/1/">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+    <form id="dislikebutton" method="POST" action="/blog/vote/{{topic.id}}/preference/2/">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+</div>
+<div style="margin-bottom: 70px;">
+    <span style="color: rgb(143, 40, 40);">{{ comments.count }} comments</span> <br>
+    {% if comments %}
+    {% for comment in comments %}
+        <div class="comments" style="padding: 1px;">
+            <div class="font-weight-bold">
+                {{ comment.name }}
+                <span class=" text-muted font-weight-normal">{{ comment.created_on }}</span> <br>
+                {{ comment.body | linebreaks }}
+                <hr>
+            </div>
+        
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Comment on this post.</p>
+        {% endif %}
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+            Thank you for your opinion
+        </div>
+        {% else %}
+        <h3>Leave a comment</h3>
+        <form method="post" style="margin-top: 1.3em;" action=".">
+            {{ t_comment_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

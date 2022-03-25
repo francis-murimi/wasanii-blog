@@ -1,0 +1,42 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}
+Topic
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="margin-bottom: 10px;">
+        {% if new_topic %}
+        <div class="alert alert-success" role="alert">
+            Your proposed topic is viable for voting.
+        </div>
+        {% else %}
+        <h3>Propose a topic</h3>
+        <form method="post" style="margin-top: 1.3em;" action=".">
+            {{ topic_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+    <div>
+        {% if topics %}
+        <p>Proposed topics</p>
+        {% for topic in topics %}
+        <div class="text-dart">
+            <span>{{topic.name}}</span> <br>
+            Proposed by: <span style="color: grey;">{{topic.proposer}}</span>
+        </div>
+        <div>
+            <a href="{{topic.get_topic_url}}">Vote</a> <br>
+            Up votes <span style="color: brown;">{{topic.likes}}</span> <br>
+            Down votes <span style="color: rgb(230, 217, 47);">{{topic.dislikes}}</span>
+        </div>
+        <hr>
+        {% endfor %}
+        {% else %}
+            <p>Propose a topic for writers to write about.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

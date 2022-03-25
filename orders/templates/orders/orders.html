@@ -1,0 +1,48 @@
+{% extends "shop/base.html" %}
+{% block title %}
+My orders
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <script>
+        function deletePost() {
+            var ask = window.confirm("Are you sure you want to delete this order?");
+            if (ask) {
+                window.alert("This post was successfully deleted.");
+                window.location.href = "window-location.html";
+            }
+        }
+    </script>
+    <div class="row" style="margin-top: 5px; border-radius: 7px;">
+        <div class="col-6" style="text-align: center; background-color: transparent;border-right: 1px solid black;padding-bottom: 10px;">
+            <span style="color: orangered; font-size: larger; font-weight: 500;">Unpaid Successful Bids</span>
+            <br>
+            {% if unpaid_orders %}
+                {% for order in unpaid_orders %}
+                <div style="padding: 3px;background-color: transparent; margin-bottom: 4px; border-radius: 3px;">
+                    <a href="{{ order.get_absolute_url }}" style="color: rgb(4, 4, 63); text-decoration: none; font-size: large; font-weight: 500;">Bid for {{order.product|title }}</a>
+                    <a href="{{ order.get_order_update }}" style="color: rgb(7, 119, 50); text-decoration: none; font-size: large; font-weight: 500; padding-top: 1px;">Update</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p> You currently don't have any unpaid bids </p>
+            {% endif %}
+        </div>
+        <div class="col-6" style="text-align: center; background-color: transparent; padding-bottom: 10px;">
+            <span style="color: olivedrab; font-size: larger; font-weight: 500;">Paid Bids</span>
+            <br>
+            {% if paid_orders %}
+                {% for order in paid_orders %}
+                <div style="padding: 3px;background-color: transparent; margin-bottom: 4px; border-radius: 3px;">
+                    <a href="{{ order.get_absolute_url }}" style="color: rgb(4, 4, 63); text-decoration: none; font-size: large; font-weight: 500;">Bid for {{order.product|title }}</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>You currently don't have any paid bids.</p>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

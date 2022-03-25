@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}{{ category.name }} {% else %} Blogs {% endif %}
+{% endblock %}
+{% block content %}
+<br>
+<!-- Use any element to open the sidenav -->
+<span onclick="openNav()" style="background-color: cornflowerblue; border: 2px solid black; border-radius: 4px; padding: 5px; margin-top: 0px;"title="Choose category">Topics</span>
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()" >&times;</a>
+    <ul> 
+        <li {% if not category %}class="selected"{% endif %}>
+            <a href="{% url  'blog:blog_list' %}">All</a>
+        </li>
+        {% for c in categories %}
+        <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+            <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="container">
+    <div>
+        {% if category %} <h3>{{ category.name }}</h3> <br>
+        <article>
+            {{ category.description }}
+        </article> <hr>
+        {% else %} <h3>Blogs</h3> {% endif %}
+        {% for blog in blogs %}
+        <div>
+            <div tabindex="-1">
+                <span style="color: rgb(214, 39, 39); font-size: larger; font-weight: 500;">{{ blog.title }} </span> <br>
+                <p class="card-text">{{blog.content|slice:":200" }} . . ....</p>
+                <span style="font-weight: 500;">Published:</span> {{ blog.created }}<br>
+                <a href="{{ blog.get_blog_url }}"><button class="btn btn-primary"> Read </button> </a> <br>
+                <span style="font-weight: 500; color: green;"> {{blog.blog_views}} </span> Reads <br>
+                <span style="color: cornflowerblue;">{{blog.likes}} Likes</span> | <span style="color: cadetblue;">{{blog.dislikes}} Dislikes</span> <br>
+                <span style="font-weight: 500;">Writer: </span><a href="{{blog.writer.get_writer_detail}}" style="text-decoration: none;">{{ blog.writer }}</a> 
+                <hr>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+    
+{% endblock %}

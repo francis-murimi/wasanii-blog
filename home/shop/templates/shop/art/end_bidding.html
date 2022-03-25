@@ -1,0 +1,10 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{% if category %}{{ category.title }}{% else %}Products{% endif %}
+{% endblock %}
+{% block content %}
+{{ bei }}
+<br>
+{{ winner }}
+{% endblock %}

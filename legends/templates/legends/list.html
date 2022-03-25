@@ -1,0 +1,22 @@
+{% extends "legends/base.html" %}
+{% load static %}
+{% block title %} Legends {% endblock %}
+{% block content %}
+
+<div class="container">
+    {% if legends %}
+        {% for legend in legends %}
+            <div>
+                <span style="color: rgb(214, 39, 39); font-size: larger; font-weight: 500;">{{legend.title}}</span> <br>
+                <p class="card-text">{{legend.story|slice:":200" }} . . ....</p>
+                Published : <span style="color: grey;">{{legend.created_on}}</span> <br>
+                <span style="color: rgb(241, 81, 81);">{{legend.likes}} Likes</span> | <span style="color: rgb(19, 206, 212);">{{legend.dislikes}} Dislikes</span> <br>
+                <a href="{{ legend.get_legend_url }}"> <button class="btn btn-primary" style="padding: 5px;">Read</button> </a> <br>
+                <hr>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No legend has been posted yet. Try again later.</p>
+    {% endif %}
+</div>
+{% endblock %}

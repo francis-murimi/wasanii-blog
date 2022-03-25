@@ -1,0 +1,61 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}
+{% if blog %}{{ blog.title }}{% else %}Blog{% endif %}
+{% endblock %}
+{% block content %}
+<div class="product-detail container">
+  <span style="font-weight: 500; font-size: larger; color: rgb(218, 40, 40);">{{ blog.title|title }} </span> <br>
+  <div class="container">
+    {{ blog.content|linebreaks }}
+  </div>
+  <div>
+    <a href="#" onClick="document.getElementById('likebutton').submit()" style="text-decoration: none;">Like </a> {{blog.likes}} Likes 
+    <a href="#" onClick="document.getElementById('dislikebutton').submit()" style="text-decoration: none;">Dislike </a> {{blog.dislikes}} Dislikes
+    <form id="likebutton" method="POST" action="/blog/{{blog.id}}/preference/1/">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+    <form id="dislikebutton" method="POST" action="/blog/{{blog.id}}/preference/2/">
+        {% csrf_token %}
+        <input type="hidden">
+    </form>
+</div>
+  <div style="margin-bottom: 70px;">
+    <span style="color: rgb(143, 40, 40);">{{ comments.count }} comments</span> <br>
+    {% if comments %}
+    {% for comment in comments %}
+        <div class="comments" style="padding: 1px;">
+          <div class="font-weight-bold">
+            {{ comment.name }}
+            <span class=" text-muted font-weight-normal">{{ comment.created_on }}</span> <br>
+            {{ comment.body | linebreaks }}
+            <hr>
+          </div>
+          
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Comment on this post.</p>
+        {% endif %}
+        {% if new_comment %}
+        <div class="alert alert-success" role="alert">
+          Thank you for your opinion
+        </div>
+        {% else %}
+        <h3>Leave a comment</h3>
+          <form method="post" style="margin-top: 1.3em;" action=".">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        {% endif %}
+  </div>
+  <div class="dits">
+    <span style="font-weight: 500;">Writer: </span><a href="{{blog.writer.get_writer_detail}}" style="text-decoration: none;">{{ blog.writer }}</a> <br>
+    <span style="font-weight: 500;">Category:</span> <a href="{{ blog.category.get_absolute_url }}" style="text-decoration: none;">{{ blog.category }}</a>
+  </div>
+
+</div>
+
+{% endblock %}

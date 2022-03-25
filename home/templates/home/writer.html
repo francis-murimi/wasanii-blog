@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% block title %}
+{{full_name}}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div>
+        {{full_name}} <br>
+        County : {{ writer.age }} <br>
+        Town : {{ writer.town }} <br>
+        Contact : {{ writer.phone_number }} <br>
+        Email: {{ a.email }}
+        <article>
+            {{writer.description|linebreaks}}
+        </article>
+        <hr>
+    </div>
+    <div>
+        <span>Blogs</span>
+        <div>
+            {% if blog %}
+            {% for a in blog %}
+            <div tabindex="-1">
+                <span style="color: rgb(214, 39, 39); font-size: larger; font-weight: 500;">{{ a.title }} </span> <br>
+                <p class="card-text">{{a.content|slice:":200" }}.. . .</p>
+                <span style="font-weight: 500;">Published:</span> {{ a.created }}<br>
+                <a href="{{ a.get_blog_url }}"> <button class="btn btn-primary" style="padding: 5px;">READ</button> </a>
+                <hr>
+            </div>
+            {% endfor %}
+            {% else %}
+                This writer has not yet posted any blog.
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

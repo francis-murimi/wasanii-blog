@@ -1,0 +1,38 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{% if art %}{{ art.name }}{% else %}Art{% endif %}
+{% endblock %}
+{% block content %}
+<div class="product-detail container">
+    <div>
+        <span style="font-weight: 500;">Name:</span> {{ art.name|title }} <br>
+        <span style="font-weight: 500;">Artist: </span><a href="{{art.artist.get_artist_detail}}" style="text-decoration: none;">{{ art.artist }}</a> <br>
+        <span style="font-weight: 500;">Category:</span> <a href="{{ art.category.get_absolute_url }}" style="text-decoration: none;">{{ art.category }}</a>
+    </div>
+    
+    <img src="{% if art.image_1 %}{{ art.image_1.url }}{% else %}{% static 'img/no_image.png' %} {% endif %}" style="max-width: 70%; border-radius: 5px;" loading="lazy">
+    <div style="padding: 5px;">
+        {% if art.available %}
+            <a href="{{art.go_bidding}}" style="text-decoration: none;"> <button class="btn btn-info" style="padding: 5px;">Bid on</button> </a> 
+        {% endif %}
+    </div>
+    <div class="container" style="font-weight: 600;">
+        {{ art.description|linebreaks }}
+    </div>
+    <div>
+        <a href="#" onClick="document.getElementById('likebutton').submit()" style="text-decoration: none;">Like</a> <span style="color: red;">{{art.likes}} Likes</span>  |
+        <a href="#" onClick="document.getElementById('dislikebutton').submit()" style="text-decoration: none;">Dislike </a><span style="color: red;">{{art.dislikes}} Dislikes</span> 
+        <form id="likebutton" method="POST" action="/art/{{art.id}}/preference/1/">
+            {% csrf_token %}
+            <input type="hidden">
+        </form>
+        <form id="dislikebutton" method="POST" action="/art/{{art.id}}/preference/2/">
+            {% csrf_token %}
+            <input type="hidden">
+        </form>
+    </div>
+    <hr>
+</div>
+
+{% endblock %}

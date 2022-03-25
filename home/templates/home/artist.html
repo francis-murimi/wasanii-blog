@@ -1,0 +1,48 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% block title %}
+{{full_name}}
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div>
+        {{full_name}} <br>
+        County : {{ artist.county }} <br>
+        Town : {{ artist.town }} <br>
+        Contact : {{ artist.phone_number }} <br>
+        Email: {{ a.email }}
+        <article>
+            {{artist.description|linebreaks}}
+        </article>
+        <hr>
+    </div>
+    <div>
+        <span>Previous work</span>
+        <div>
+            {% if art %}
+            {% for a in art %}
+                {{a.name}} <br>
+                {{a.category}} <br>
+                <img src="{{a.image_1.url}}" alt="{{a.name}}" style="width: 80%;" loading="lazy">
+                {% if a.image_2 %}
+                    <img src="{{a.image_2.url}}" alt="{{a.name}}" style="width: 80%;" loading="lazy">
+                {% endif %} <br>
+                {{a.likes}} Likes <br>
+                {{a.dislikes}} Dislikes <br>
+                {% if a.available %}
+                <a href="{{a.go_bidding}}" style="text-decoration: none;"> <button class="btn btn-info">Bid on</button> </a> 
+                {% else %}
+                <p>This art is not available for bidding.</p>
+                {% endif %}
+                <article>
+                    {{a.description|linebreaks}}
+                </article>
+                <hr>
+            {% endfor %}
+            {% else %}
+                This artist has not yet posted any art work.
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

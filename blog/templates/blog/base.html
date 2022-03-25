@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+        <title>{% block title %}Blogs{% endblock %}</title>
+        <script>
+            /* Set the width of the side navigation to 250px */
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+                }
+            /* Set the width of the side navigation to 0 */
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                }
+        </script>
+        <style>
+            /* The side navigation menu */
+            .sidenav {
+                 height: 100%; /* 100% Full-height */
+                 width: 0; /* 0 width - change this with JavaScript */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Stay on top */
+                top: 0; /* Stay at the top */
+                left: 0;
+                background-color: #cccde7; /* Black*/
+                overflow-x: hidden; /* Disable horizontal scroll */
+                padding-top: 60px; /* Place content 60px from the top */
+                margin-top: 65px;
+                transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+                border-top-right-radius: 5px;
+                }
+
+            /* The navigation menu links */
+            .sidenav a {
+                padding: 8px 8px 8px 32px;
+                text-decoration: none;
+                font-size: 15px;
+                color: #312f2f;
+                display: block;
+                transition: 0.3s;
+                }
+
+            /* When you mouse over the navigation links, change their color */
+            .sidenav a:hover {
+                color: #6e326b;
+                }
+
+            /* Position and style the close button (top right corner) */
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+                color: red;
+                }
+
+            /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+            #main {
+                transition: margin-left .5s;
+                padding: 20px;
+                }
+
+            /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+            @media screen and (max-height: 450px) {
+                .sidenav {padding-top: 15px;}
+                .sidenav a {font-size: 18px;}
+                }
+            .items{
+                border: 1px blue solid; 
+                background-color: white;
+                padding: 3px;
+                margin-bottom: 5px; 
+                border-radius: 3px;
+                transition: all .4s ease-in-out;
+                box-shadow: 0 0 25px 0 rgba(20, 27, 202, .17);
+            }
+            .items:hover {
+                box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+                cursor: pointer;
+                background-image: linear-gradient(-45deg, #d3cfeb 0%, #bbd0e2 100%)
+            }
+            .items:focus {
+                box-shadow: 0 0 25px 0 rgba(20, 27, 201, .05);
+                cursor: pointer;
+                background-image: linear-gradient(-45deg, #ccc7e6 0%, #bed2e4 100%)
+            }
+            /*Floating Back-To-Top Button*/
+    #topBtn {
+        position: fixed;
+        bottom: 10px;
+        float: right;
+        right: 10px;
+        max-width: 40px;
+        width: 100%;
+        font-size: 12px;
+        border-color: rgba(85, 85, 85, 0.2);
+        background-color: rgb(100,100,100);
+        padding: 3px;
+        border-radius: 4px;
+    }
+    .dits{
+        position: fixed;
+        bottom: 10px;
+        float: left;
+        left: 10px;
+        max-width: fit-content;
+        border-color: rgba(85, 85, 85, 0.2);
+        background-color: rgb(252, 246, 246);
+        padding: 3px;
+        border-radius: 4px;
+    }
+/*On Hover Color Change*/
+    #topBtn:hover {
+        background-color: #7dbbf1;
+    }
+    .all{
+        width: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+        </style>
+    </head>
+    <body class="container-fluid bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top .navbar-expand{-sm|-md|-lg|-xl|-xxl}">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">BLOG</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:blog_list' %}">List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:add_blog' %}" >Add Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:edit_list' %}" >My Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:add_topic' %}" >Propose</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'shop:art_list' %}" >Arts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'legends:legend_list' %}">Legends</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home:home' %}" >Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div style="padding-top: 55px;"></div>
+        <div id="content";class="container-fluid">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <button id="topBtn"><a href="#top" style="color: white; text-decoration: none;">Top</a></button>
+    </body>
+</html>
