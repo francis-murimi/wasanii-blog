@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import BlogAddForm, CommentForm,TopicForm, TCommentForm,BlogEditForm
 from django.contrib.auth.models import User
 from home.models import WriterProfile
-from django.views.generic import CreateView
+from django.views.generic import CreateView 
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 
